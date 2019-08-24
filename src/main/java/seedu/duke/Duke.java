@@ -18,9 +18,16 @@ public class Duke {
 
         ArrayList<String> inputArray = new ArrayList<String>();
         while (!userInput.equals("bye")) {
+            if (userInput.equals("list")) {
+                for(int i = 0; i < inputArray.size(); i++) {
+                    System.out.println((i + 1) + ". " + inputArray.get(i));
+                }
+                userInput = input.nextLine();
+            } else {
                 inputArray.add(userInput);
                 System.out.println("added: " + userInput);
                 userInput = input.nextLine();
+            }
         }
         System.out.println("Bye. Hope to see you again soon!");
     }
