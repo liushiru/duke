@@ -26,7 +26,7 @@ public class Duke {
             if (userInput.equals("list")) {
                 for(int i = 0; i < inputArray.size(); i++) {
                     String description = inputArray.get(i).getDescription();
-                    System.out.println((i + 1) + ".[" + inputArray.get(i).getStatusIcon() + "] " + description);
+                    System.out.println((i + 1) + "." + inputArray.get(i).toString());
                 }
                 userInput = input.nextLine();
             } else if (tokens[0].equals("done")) {
@@ -36,9 +36,30 @@ public class Duke {
                 System.out.println("[" + inputArray.get(taskNum).getStatusIcon() + "] " + inputArray.get(taskNum).getDescription());
                 userInput = input.nextLine();
             } else {
-                Task newTask= new Task(userInput);
-                inputArray.add(newTask);
-                System.out.println("added: " + userInput);
+                System.out.println("Got it. I've added this task: ");
+
+                if (userInput.charAt(0) == 'd') {
+                    String descriptionWithTime = userInput.split(" ", 2)[1];
+                    String description = descriptionWithTime.split(" /by ")[0];
+                    String by = descriptionWithTime.split(" /by ")[1];
+                    Deadline newDeadline = new Deadline(description, by);
+                    inputArray.add(newDeadline);
+                    System.out.println("  " + newDeadline.toString());
+                } else if (userInput.charAt(0) == 'e') {
+                    String descriptionWithTime = userInput.split(" ", 2)[1];
+                    String description = descriptionWithTime.split(" /at ")[0];
+                    String at = descriptionWithTime.split(" /at ")[1];
+                    Event newEvent = new Event(description, at);
+                    inputArray.add(newEvent);
+                    System.out.println( "  " + newEvent.toString());
+                } else {
+                    String description = userInput.split(" ", 2)[1];
+                    Todo newTodo = new Todo(description);
+                    inputArray.add(newTodo);
+                    System.out.println( "  " + newTodo.toString());
+                }
+
+                System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
                 userInput = input.nextLine();
             }
         }
