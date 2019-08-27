@@ -1,9 +1,3 @@
-
-T | 0 | list
-D | 0 | now | then
-D | 0 | now | then
-D | 0 | now | then
-D | 0 | then | now
-D | 0 | now | then
-T | 0 | list
-E | 0 | now | then
+1.[T][✗] list
+2.[D][✓] return book (by: Sunday)
+3.[E][✓] project meeting (at: Mon 2-4pm)
