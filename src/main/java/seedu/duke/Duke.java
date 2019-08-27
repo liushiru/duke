@@ -77,24 +77,16 @@ public class Duke {
         switch (type) {
             case "deadline":
                 Deadline newDeadline = new Deadline(infoList[0], infoList[1]);
-                //storeTask('D', newDeadline);
-                //storeTask(newDeadline);
                 inputArray.add(newDeadline);
-
                 break;
             case "event":
                 infoList = getInfo("event", userInput);
                 Event newEvent = new Event(infoList[0], infoList[1]);
-               // storeTask('E', newEvent);
-                //storeTask(newEvent);
                 inputArray.add(newEvent);
                 break;
             case "todo":
                 String description = userInput.split(" ", 2)[1];
                 Todo newTodo = new Todo(description);
-
-                //storeTask('T', newTodo);
-                //storeTask(newTodo);
                 inputArray.add(newTodo);
                 break;
         }
@@ -107,7 +99,6 @@ public class Duke {
         for(Task task : inputArray) {
             content += i++ + "." + task.toString() + "\n";
         }
-        //System.out.println(content);
         return content;
     }
 
@@ -117,20 +108,38 @@ public class Duke {
         String description;
         String time;
         String info = line.split(" ", 2)[1];
-        String[] infoList = new String[2];
+        String[] infoList;
         if (type == 'T') {
             description = info;
-            return new Todo(description);
+            if (done) {
+                Todo todo = new Todo(description);
+                todo.setDone();
+                return todo;
+            } else {
+                return new Todo(description);
+            }
         } else if (type == 'D') {
-            infoList = info.split(" (by: ", 2);
-            description = infoList[0];
-            time = infoList[1];
-            return new Deadline(description, time);
+            infoList = info.split("by: ", 2);
+            description = infoList[0].substring(0, infoList[0].length() - 2);
+            time = infoList[1].substring(0, infoList[1].length() - 1);
+            if (done) {
+                Deadline deadline = new Deadline(description, time);
+                deadline.setDone();
+                return deadline;
+            } else {
+                return new Deadline(description, time);
+            }
         } else {
-            infoList = info.split(" (at: ", 2);
-            description = infoList[0];
-            time = infoList[1];
-            return new Event(description, time);
+            infoList = info.split("at: ", 2);
+            description = infoList[0].substring(0, infoList[0].length() - 2);
+            time = infoList[1].substring(0, infoList[1].length() - 1);
+            if (done) {
+                Event event = new Event(description, time);
+                event.setDone();
+                return event;
+            } else {
+                return new Event(description, time);
+            }
         }
     }
     public static void readFile (ArrayList<Task> inputArray) {

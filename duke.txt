@@ -1,3 +1,5 @@
 1.[T][✗] list
-2.[D][✓] return book (by: Sunday)
-3.[E][✓] project meeting (at: Mon 2-4pm)
+2.[D][✗] return book (by: Sunday)
+3.[E][✗] project meeting (at: Mon 2-4pm)
+4.[T][✓] debug
+5.[T][✗] waffles
