@@ -1,0 +1,9 @@
+
+T | 0 | list
+D | 0 | now | then
+D | 0 | now | then
+D | 0 | now | then
+D | 0 | then | now
+D | 0 | now | then
+T | 0 | list
+E | 0 | now | then

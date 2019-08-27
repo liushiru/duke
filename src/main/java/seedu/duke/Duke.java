@@ -1,5 +1,7 @@
 package seedu.duke;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
@@ -39,6 +41,69 @@ public class Duke {
         return true;
     }
 
+    public static void storeTask(char type, Task task) throws IOException {
+        try {
+            PrintWriter outputStream = new PrintWriter(new FileWriter("duke.txt", true));
+            outputStream.print(type + " | ");
+            if (task.isDone) {
+                outputStream.print(1 + " | ");
+            } else {
+                outputStream.print(0 + " | ");
+            }
+
+            if (type == 'T') {
+                outputStream.println(task.getDescription());
+            } else if (type == 'D'){
+                outputStream.print(task.getDescription() + " | ");
+                outputStream.println(((Deadline) task).getTime());
+            } else {
+                outputStream.print(task.getDescription() + " | ");
+                outputStream.println(((Event) task).getTime());
+            }
+            outputStream.close(); //flush the data to the file
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void storeInput(String userInput, ArrayList<Task> inputArray) throws IOException {
+        String type = userInput.split(" ", 2)[0];
+        String[] infoList = getInfo(type, userInput);
+        switch (type) {
+            case "deadline":
+                Deadline newDeadline = new Deadline(infoList[0], infoList[1]);
+                storeTask('D', newDeadline);
+                inputArray.add(newDeadline);
+                break;
+            case "event":
+                infoList = getInfo("event", userInput);
+                Event newEvent = new Event(infoList[0], infoList[1]);
+                storeTask('E', newEvent);
+                inputArray.add(newEvent);
+                break;
+            case "todo":
+                String description = userInput.split(" ", 2)[1];
+                Todo newTodo = new Todo(description);
+                storeTask('T', newTodo);
+                inputArray.add(newTodo);
+                break;
+        }
+    }
+
+    public static void displayFile() throws IOException {
+        BufferedReader in = new BufferedReader(new FileReader("duke.txt"));
+        String line;
+        while((line = in.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
+            /*
+    public static void display(ArrayList<Task> inputArray) {
+        Task currTask = inputArray.get(inputArray.size() - 1);
+        System.out.println(" " + currTask.toString());
+        System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
+    }
+*/
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -46,8 +111,14 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
+        try {
+            displayFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
+
 
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
@@ -73,20 +144,8 @@ public class Duke {
                 try {
                     inputValidation(userInput);
                     System.out.println("Got it. I've added this task: ");
-                    String[] infoList;
-                    if (userInput.startsWith("deadline")) {
-                        infoList = getInfo("deadline", userInput);
-                        Deadline newDeadline = new Deadline(infoList[0], infoList[1]);
-                        inputArray.add(newDeadline);
-                    } else if (userInput.startsWith("event")) {
-                        infoList = getInfo("event", userInput);
-                        Event newEvent = new Event(infoList[0], infoList[1]);
-                        inputArray.add(newEvent);
-                    } else {
-                        String description = userInput.split(" ", 2)[1];
-                        Todo newTodo = new Todo(description);
-                        inputArray.add(newTodo);
-                    }
+                    storeInput(userInput, inputArray);
+
                     Task currTask = inputArray.get(inputArray.size() - 1);
                     System.out.println(" " + currTask.toString());
                     System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
