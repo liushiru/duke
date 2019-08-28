@@ -78,20 +78,22 @@ public class Duke {
     public static void storeInput(String userInput, ArrayList<Task> inputArray) throws IOException {
         String type = userInput.split(" ", 2)[0];
         String[] infoList = getInfo(type, userInput);
-
+        String time = infoList[1].trim();
+        Date date = getDate(time);
         switch (type) {
             case "deadline":
-                String time = infoList[1].trim();
-                Date date = getDate(time);
-                if (date != null) {
-                   // System.out.println("getDate" + date);
-                }
                 Deadline newDeadline = new Deadline(infoList[0].trim(), infoList[1].trim());
+                if (date != null) {
+                    newDeadline.setTime(date);
+                }
                 inputArray.add(newDeadline);
                 break;
             case "event":
-                infoList = getInfo("event", userInput);
+               // infoList = getInfo("event", userInput);
                 Event newEvent = new Event(infoList[0].trim(), infoList[1].trim());
+                if (date != null) {
+                    newEvent.setTime(date);
+                }
                 inputArray.add(newEvent);
                 break;
             case "todo":
@@ -196,10 +198,8 @@ public class Duke {
             } else {
                 date = new SimpleDateFormat("dd/MM/yyyy").parse(input);
             }
-            //System.out.println(date);
             return date;
         } catch (ParseException e) {
-            //System.out.println("invalid date with space");
             return null;
         }
     }
@@ -267,7 +267,6 @@ public class Duke {
                     inputValidation(userInput);
                     System.out.println("Got it. I've added this task: ");
                     storeInput(userInput, inputArray);
-
                     Task currTask = inputArray.get(inputArray.size() - 1);
                     System.out.println(" " + currTask.toString());
                     System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
@@ -279,5 +278,4 @@ public class Duke {
         }
         System.out.println("Bye. Hope to see you again soon!");
     }
-
 }

@@ -1,16 +1,22 @@
 package seedu.duke;
 
+import java.util.Date;
+
 public class Deadline extends Task {
 
     protected String by;
+    protected Date time;
 
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
     }
 
-    public String getTime() {
-        return this.by;
+    public Date getTime() {
+        return this.time;
+    }
+    public void setTime(Date time) {
+        this.time = time;
     }
     @Override
     public String toString() {
