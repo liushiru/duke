@@ -21,4 +21,16 @@ public class DukeException extends Exception {
             System.out.println("☹ OOPS!!! The description of a " + type + " cannot be empty.");
         }
     }
+
+    public static class invalidTaskNumException extends Exception {
+        public invalidTaskNumException() {
+            System.out.println("☹ OOPS!!! We don't know which task to process, pls enter an task number as a integer");
+        }
+    }
+
+    public static class taskOutOfRangeException extends Exception {
+        public taskOutOfRangeException() {
+            System.out.println("☹ OOPS!!! You don't have such task in your list");
+        }
+    }
 }

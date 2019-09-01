@@ -16,8 +16,14 @@ enum Command {
     list,
     done,
     delete,
+    todo,
+    deadline,
+    event,
     bye
 }
+
+
+
 
 public class Duke {
 
@@ -36,10 +42,18 @@ public class Duke {
         return arr;
     }
 
-    public static boolean inputValidation(String input) throws Exception {
-        if (!(input.startsWith("todo") || input.startsWith("event") || input.startsWith("deadline"))) {
-            throw new DukeException.inputInvalidException();
+    public static boolean validCommand(String userCmd) {
+        for (Command c : Command.values()) {
+            if (c.name().equals(userCmd)) {
+                return true;
+            }
         }
+        return false;
+    }
+
+    public static boolean inputValidation(String input, ArrayList<Task> ... inputArray) throws Exception {
+        String validCommand = "list " +"done " +"delete" +"todo" +"deadline" +"event" +"bye";
+       // if (!validCommand.contains(input.split(" ", 1)[0])) {
 
         if (input.startsWith("event") && input.equals("event")) {
                 throw new DukeException.emptyDescriptionException("event");
@@ -53,6 +67,30 @@ public class Duke {
             throw new DukeException.emptyDescriptionException("deadline");
         }
 
+        if (input.startsWith("delete") || input.startsWith("done")) {
+            if (input.contains(" ")) {
+                String[] arr;
+                arr = input.split(" ", 2);
+                try {
+
+                    if (!arr[1].equals("all")) {
+                        int x = Integer.parseInt(arr[1]);
+                        if (x > inputArray[0].size() || x <= 0) {
+                            throw new DukeException.taskOutOfRangeException();
+                        }
+                    }
+                } catch (Exception e) {
+                    throw new DukeException.invalidTaskNumException();
+                }
+            } else {
+                throw new DukeException.invalidTaskNumException();
+            }
+        }
+
+        if (!validCommand(input.split(" ")[0])) {
+            throw new DukeException.inputInvalidException();
+        }
+
         return true;
     }
 
@@ -60,10 +98,11 @@ public class Duke {
     public static void storeInput(String userInput, ArrayList<Task> inputArray) throws IOException {
         String type = userInput.split(" ", 2)[0];
         String[] infoList = getInfo(type, userInput);
-        String time = infoList[1].trim();
-        Date date = getDate(time);
+        ;
         switch (type) {
             case "deadline":
+                String time = infoList[1].trim();
+                Date date = getDate(time);
                 Deadline newDeadline = new Deadline(infoList[0].trim(), infoList[1].trim());
                 newDeadline.setType(Type.T);
                 if (date != null) {
@@ -72,7 +111,8 @@ public class Duke {
                 inputArray.add(newDeadline);
                 break;
             case "event":
-               // infoList = getInfo("event", userInput);
+                time = infoList[1].trim();
+                date = getDate(time);
                 Event newEvent = new Event(infoList[0].trim(), infoList[1].trim());
                 newEvent.setType(Type.E);
                 if (date != null) {
@@ -116,11 +156,10 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         ArrayList<Task> inputArray = new ArrayList<Task>();
-        DukeFile dukeFile = new DukeFile();
+        DukeFile dukeFile = new DukeFile("duke.txt");
         try {
             dukeFile.readFile(inputArray);
-            //readFile(inputArray);
-            dukeFile.displayFile("duke.txt");
+            dukeFile.displayFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,35 +168,41 @@ public class Duke {
         String userInput = input.nextLine();
 
         while (!userInput.equals("bye")) {
+            try {
+                inputValidation(userInput,inputArray);
+            } catch (Exception e) {
+                userInput = input.nextLine();
+            }
 
             String[] tokens = userInput.split(" ");
 
             if (userInput.equals("list")) {
                 System.out.println(dukeFile.taskArrayToString(inputArray));
-                userInput = input.nextLine();
             } else if (tokens[0].equals("done")) {
-                int taskNum = Integer.parseInt(tokens[1]) - 1;
-                inputArray.get(taskNum).setDone();
-                dukeFile.writeFile(inputArray, "duke.txt");
+                int taskIndex = Integer.parseInt(tokens[1]) - 1;
+                inputArray.get(taskIndex).setDone();
+                dukeFile.writeFile(inputArray);
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  " + inputArray.get(taskNum).toString());
-                userInput = input.nextLine();
+                System.out.println("  " + inputArray.get(taskIndex).toString());
             } else if (tokens[0].equals("delete")) {
-
-            } else {
-                try {
-                    inputValidation(userInput);
-                    System.out.println("Got it. I've added this task: ");
-                    storeInput(userInput, inputArray);
-                    dukeFile.writeFile(inputArray, "duke.txt");
-                    Task currTask = inputArray.get(inputArray.size() - 1);
-                    System.out.println(" " + currTask.toString());
-                    System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
-                    userInput = input.nextLine();
-                } catch (Exception e) {
-                    userInput = input.nextLine();
+                if (tokens[1].equals("all")) {
+                    inputArray.clear();
+                } else {
+                    int taskIndex = Integer.parseInt(tokens[1]) - 1;
+                    inputArray.remove(taskIndex);
                 }
+                System.out.println("Nice! I've deleted the task");
+                System.out.println("Now you left " + inputArray.size() + " in the list");
+                dukeFile.writeFile(inputArray);
+            } else {
+                System.out.println("Got it. I've added this task: ");
+                storeInput(userInput, inputArray);
+                dukeFile.writeFile(inputArray);
+                Task currTask = inputArray.get(inputArray.size() - 1);
+                System.out.println(" " + currTask.toString());
+                System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
             }
+            userInput = input.nextLine();
         }
         System.out.println("Bye. Hope to see you again soon!");
     }
