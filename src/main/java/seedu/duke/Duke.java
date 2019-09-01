@@ -191,6 +191,30 @@ public class Duke {
                     int taskIndex = Integer.parseInt(tokens[1]) - 1;
                     inputArray.remove(taskIndex);
                 }
+            } else if (tokens[0].equals("find")) {
+                ArrayList<Task> relevantTaskList = new ArrayList<Task>();
+                String keyword = userInput.split(" ", 2)[1];
+                for(int i=0; i < inputArray.size(); i++) {
+                    Task currTask = inputArray.get(i);
+                    if (currTask.getDescription().contains(keyword)) {
+                        relevantTaskList.add(currTask);
+                    }
+                }
+                System.out.println("Here are the matching tasks in your list");
+                System.out.println(dukeFile.taskArrayToString(relevantTaskList));
+                userInput = input.nextLine();
+            } else if (tokens[0].equals("delete")){
+                try {
+                    inputValidation(userInput);
+                    System.out.println("Got it. I've added this task: ");
+                    storeInput(userInput, inputArray);
+                    dukeFile.writeFile(inputArray);
+                    Task currTask = inputArray.get(inputArray.size() - 1);
+                    System.out.println(" " + currTask.toString());
+                    System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
+                } catch (Exception e) {
+                    userInput = input.nextLine();
+                }
                 System.out.println("Nice! I've deleted the task");
                 System.out.println("Now you left " + inputArray.size() + " in the list");
                 dukeFile.writeFile(inputArray);
