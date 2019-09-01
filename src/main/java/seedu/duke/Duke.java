@@ -72,7 +72,6 @@ public class Duke {
                 inputArray.add(newDeadline);
                 break;
             case "event":
-               // infoList = getInfo("event", userInput);
                 Event newEvent = new Event(infoList[0].trim(), infoList[1].trim());
                 newEvent.setType(Type.E);
                 if (date != null) {
@@ -119,7 +118,6 @@ public class Duke {
         DukeFile dukeFile = new DukeFile();
         try {
             dukeFile.readFile(inputArray);
-            //readFile(inputArray);
             dukeFile.displayFile("duke.txt");
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,6 +142,18 @@ public class Duke {
                 userInput = input.nextLine();
             } else if (tokens[0].equals("delete")) {
 
+            } else if (tokens[0].equals("find")) {
+                ArrayList<Task> relevantTaskList = new ArrayList<Task>();
+                String keyword = userInput.split(" ", 2)[1];
+                for(int i=0; i < inputArray.size(); i++) {
+                    Task currTask = inputArray.get(i);
+                    if (currTask.getDescription().contains(keyword)) {
+                        relevantTaskList.add(currTask);
+                    }
+                }
+                System.out.println("Here are the matching tasks in your list");
+                System.out.println(dukeFile.taskArrayToString(relevantTaskList));
+                userInput = input.nextLine();
             } else {
                 try {
                     inputValidation(userInput);
