@@ -196,7 +196,7 @@ public class Duke {
                 String keyword = userInput.split(" ", 2)[1];
                 for(int i=0; i < inputArray.size(); i++) {
                     Task currTask = inputArray.get(i);
-                    if (currTask.getDescription().contains(keyword)) {
+                    if (currTask.toString().contains(keyword)) {
                         relevantTaskList.add(currTask);
                     }
                 }
