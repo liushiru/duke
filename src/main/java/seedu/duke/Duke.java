@@ -1,27 +1,10 @@
 package seedu.duke;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-enum Command {
-    list,
-    done,
-    delete,
-    todo,
-    deadline,
-    event,
-    bye
-}
-
 
 
 
@@ -52,8 +35,6 @@ public class Duke {
     }
 
     public static boolean inputValidation(String input, ArrayList<Task> ... inputArray) throws Exception {
-        String validCommand = "list " +"done " +"delete" +"todo" +"deadline" +"event" +"bye";
-       // if (!validCommand.contains(input.split(" ", 1)[0])) {
 
         if (input.startsWith("event") && input.equals("event")) {
                 throw new DukeException.emptyDescriptionException("event");
@@ -156,7 +137,7 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         ArrayList<Task> inputArray = new ArrayList<Task>();
-        DukeFile dukeFile = new DukeFile("duke.txt");
+        Storage dukeFile = new Storage("duke.txt");
         try {
             dukeFile.readFile(inputArray);
             dukeFile.displayFile();
@@ -202,7 +183,6 @@ public class Duke {
                 }
                 System.out.println("Here are the matching tasks in your list");
                 System.out.println(dukeFile.taskArrayToString(relevantTaskList));
-                userInput = input.nextLine();
             } else if (tokens[0].equals("delete")){
                 try {
                     inputValidation(userInput);

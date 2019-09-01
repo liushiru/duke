@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 //to read and write from the file
-public class DukeFile {
+public class Storage {
 
     protected String fileName;
     protected Path path;
     protected FileReader fileReader;
-    public DukeFile(String fileName) throws FileNotFoundException {
+    public Storage(String fileName) throws FileNotFoundException {
         this.fileName = fileName;
     }
-
+/*
     public String taskArrayToString (ArrayList<Task> inputArray) {
         String content = "";
         int i = 1;
@@ -25,7 +25,7 @@ public class DukeFile {
         }
         return content;
     }
-
+*/
     public static Task decodeLine (String line) {
         int typeIndex = line.indexOf("[") + 1;
         char type = line.charAt(typeIndex);
@@ -71,7 +71,9 @@ public class DukeFile {
     }
 
     public void writeFile(ArrayList<Task> inputArray) {
-        String content = taskArrayToString(inputArray);
+        //String content = taskArrayToString(inputArray);
+        UI ui = new UI();
+        String content = ui.taskArrayToString(inputArray);
         try {
             PrintWriter outputStream = new PrintWriter(new FileWriter(this.fileName));
             outputStream.print(content);

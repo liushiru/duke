@@ -33,4 +33,9 @@ public class DukeException extends Exception {
             System.out.println("☹ OOPS!!! You don't have such task in your list");
         }
     }
+    public static class invalidCommandType extends Exception {
+        public invalidCommandType() {
+            System.out.println("☹ OOPS!!! the command type is invalid");
+        }
+    }
 }
