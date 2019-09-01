@@ -10,14 +10,11 @@ import java.util.Date;
 //to read and write from the file
 public class DukeFile {
 
-    protected String content;
+    protected String fileName;
     protected Path path;
     protected FileReader fileReader;
-    public DukeFile() throws FileNotFoundException {
-        this.content = "";
-       // this.path = Paths.get("duke.txt");
-       // this.fileReader = new FileReader("duke.txt");
-        //this.fileReader = new FileReader(String.valueOf(this.path));
+    public DukeFile(String fileName) throws FileNotFoundException {
+        this.fileName = fileName;
     }
 
     public String taskArrayToString (ArrayList<Task> inputArray) {
@@ -73,10 +70,10 @@ public class DukeFile {
         }
     }
 
-    public void writeFile(ArrayList<Task> inputArray, String fileName) {
+    public void writeFile(ArrayList<Task> inputArray) {
         String content = taskArrayToString(inputArray);
         try {
-            PrintWriter outputStream = new PrintWriter(new FileWriter(fileName));
+            PrintWriter outputStream = new PrintWriter(new FileWriter(this.fileName));
             outputStream.print(content);
             outputStream.close();
         } catch (IOException e) {
@@ -84,11 +81,11 @@ public class DukeFile {
         }
     }
 
-    public static void readFile (ArrayList<Task> inputArray) {
+    public void readFile (ArrayList<Task> inputArray) {
         inputArray.clear();
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader("duke.txt"));
+            reader = new BufferedReader(new FileReader(this.fileName));
             String line = reader.readLine();
             if (line==null) {
                 return;
@@ -105,8 +102,8 @@ public class DukeFile {
         }
     }
 
-    public static void displayFile(String fileName) throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader(fileName));
+    public void displayFile() throws IOException {
+        BufferedReader in = new BufferedReader(new FileReader(this.fileName));
         String line;
         while((line = in.readLine()) != null) {
             System.out.println(line);
