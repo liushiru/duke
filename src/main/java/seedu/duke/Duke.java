@@ -12,6 +12,13 @@ import java.util.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+enum Command {
+    list,
+    done,
+    delete,
+    bye
+}
+
 public class Duke {
 
     // return arr[description][time] for ddl and event
@@ -49,32 +56,7 @@ public class Duke {
         return true;
     }
 
-    /*
-    public static void storeTask(char type, Task task) throws IOException {
-        try {
-            PrintWriter outputStream = new PrintWriter(new FileWriter("duke.txt", true));
-            outputStream.print(type + " | ");
-            if (task.isDone) {
-                outputStream.print(1 + " | ");
-            } else {
-                outputStream.print(0 + " | ");
-            }
-
-            if (type == 'T') {
-                outputStream.println(task.getDescription());
-            } else if (type == 'D'){
-                outputStream.print(task.getDescription() + " | ");
-                outputStream.println(((Deadline) task).getTime());
-            } else {
-                outputStream.print(task.getDescription() + " | ");
-                outputStream.println(((Event) task).getTime());
-            }
-            outputStream.close(); //flush the data to the file
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-*/
+    // Store input to RAM
     public static void storeInput(String userInput, ArrayList<Task> inputArray) throws IOException {
         String type = userInput.split(" ", 2)[0];
         String[] infoList = getInfo(type, userInput);
@@ -83,6 +65,7 @@ public class Duke {
         switch (type) {
             case "deadline":
                 Deadline newDeadline = new Deadline(infoList[0].trim(), infoList[1].trim());
+                newDeadline.setType(Type.T);
                 if (date != null) {
                     newDeadline.setTime(date);
                 }
@@ -91,6 +74,7 @@ public class Duke {
             case "event":
                // infoList = getInfo("event", userInput);
                 Event newEvent = new Event(infoList[0].trim(), infoList[1].trim());
+                newEvent.setType(Type.E);
                 if (date != null) {
                     newEvent.setTime(date);
                 }
@@ -99,96 +83,14 @@ public class Duke {
             case "todo":
                 String description = userInput.split(" ", 2)[1].trim();
                 Todo newTodo = new Todo(description);
+                newTodo.setType(Type.T);
                 inputArray.add(newTodo);
                 break;
         }
-        writeFile(inputArray);
     }
 
-    public static String taskArrayToString (ArrayList<Task> inputArray) {
-        String content = "";
-        int i = 1;
-        for(Task task : inputArray) {
-            content += i++ + "." + task.toString() + "\n";
-        }
-        return content;
-    }
 
-    public static Task decodeLine (String line) {
-        int typeIndex = line.indexOf("[") + 1;
-        char type = line.charAt(typeIndex);
-        int doneIndex = line.indexOf("][") + 1;
-        boolean done = (line.charAt(doneIndex) == '\u2713') ? true : false;
-        String description;
-        String time;
-        String info = line.split(" ", 2)[1];
-        String[] infoList;
-        if (type == 'T') {
-            description = info;
-            if (done) {
-                Todo todo = new Todo(description);
-                todo.setDone();
-                return todo;
-            } else {
-                return new Todo(description);
-            }
-        } else if (type == 'D') {
-            infoList = info.split(" \\(by: ", 2);
-            description = infoList[0];
-            time = infoList[1].substring(0, infoList[1].length() - 1);
-            if (done) {
-                Deadline deadline = new Deadline(description, time);
-                deadline.setDone();
-                return deadline;
-            } else {
-                return new Deadline(description, time);
-            }
-        } else {
-            infoList = info.split(" \\(at: ", 2);
-            description = infoList[0];
-
-            time = infoList[1].substring(0, infoList[1].length() - 1);
-            if (done) {
-                Event event = new Event(description, time);
-                event.setDone();
-                return event;
-            } else {
-                return new Event(description, time);
-            }
-        }
-    }
-    public static void readFile (ArrayList<Task> inputArray) {
-        inputArray.clear();
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader("duke.txt"));
-            String line = reader.readLine();
-            if (line==null) {
-                return;
-            }
-            while (line != null) {
-                Task task = decodeLine(line);
-                inputArray.add(task);
-                line = reader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void writeFile(ArrayList<Task> inputArray) {
-        String content = taskArrayToString(inputArray);
-        try {
-            PrintWriter outputStream = new PrintWriter(new FileWriter("duke.txt"));
-            outputStream.print(content);
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    //Get the date from a formatted input string
     public static Date getDate (String input) {
 
         try {
@@ -203,30 +105,7 @@ public class Duke {
             return null;
         }
     }
-    public static void storeTask(Task task) {
-        try {
-            PrintWriter outputStream = new PrintWriter(new FileWriter("duke.txt", true));
-            outputStream.println(task.toString());
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void displayFile() throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader("duke.txt"));
-        String line;
-        while((line = in.readLine()) != null) {
-            System.out.println(line);
-        }
-    }
 
-            /*
-    public static void display(ArrayList<Task> inputArray) {
-        Task currTask = inputArray.get(inputArray.size() - 1);
-        System.out.println(" " + currTask.toString());
-        System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
-    }
-*/
     public static void main(String[] args) throws IOException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -237,10 +116,11 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         ArrayList<Task> inputArray = new ArrayList<Task>();
-
+        DukeFile dukeFile = new DukeFile();
         try {
-            readFile(inputArray);
-            displayFile();
+            dukeFile.readFile(inputArray);
+            //readFile(inputArray);
+            dukeFile.displayFile("duke.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -253,20 +133,23 @@ public class Duke {
             String[] tokens = userInput.split(" ");
 
             if (userInput.equals("list")) {
-                System.out.println(taskArrayToString(inputArray));
+                System.out.println(dukeFile.taskArrayToString(inputArray));
                 userInput = input.nextLine();
             } else if (tokens[0].equals("done")) {
                 int taskNum = Integer.parseInt(tokens[1]) - 1;
                 inputArray.get(taskNum).setDone();
-                writeFile(inputArray);
+                dukeFile.writeFile(inputArray, "duke.txt");
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("  " + inputArray.get(taskNum).toString());
                 userInput = input.nextLine();
+            } else if (tokens[0].equals("delete")) {
+
             } else {
                 try {
                     inputValidation(userInput);
                     System.out.println("Got it. I've added this task: ");
                     storeInput(userInput, inputArray);
+                    dukeFile.writeFile(inputArray, "duke.txt");
                     Task currTask = inputArray.get(inputArray.size() - 1);
                     System.out.println(" " + currTask.toString());
                     System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
