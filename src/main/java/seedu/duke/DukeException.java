@@ -38,4 +38,10 @@ public class DukeException extends Exception {
             System.out.println("☹ OOPS!!! the command type is invalid");
         }
     }
+    public static class emptyFileException extends Exception {
+        public emptyFileException() {
+            System.out.println("☹ OOPS!!! the command type is invalid");
+        }
+    }
+
 }

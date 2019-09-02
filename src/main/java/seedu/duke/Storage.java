@@ -83,8 +83,7 @@ public class Storage {
         }
     }
 
-    public void readFile (ArrayList<Task> inputArray) {
-        inputArray.clear();
+    public TaskList readFile () {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(this.fileName));
@@ -94,7 +93,6 @@ public class Storage {
             }
             while (line != null) {
                 Task task = decodeLine(line);
-                inputArray.add(task);
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {

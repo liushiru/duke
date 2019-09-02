@@ -1,6 +1,5 @@
 package seedu.duke;
 
-import javax.rmi.ssl.SslRMIClientSocketFactory;
 import java.util.ArrayList;
 
 public class UI {
@@ -24,6 +23,18 @@ public class UI {
         System.out.println("I have deleted task No." + taskNum + " for you");
     }
 
+    public void start() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println(logo);
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+    }
+
+
     public void welfare() {
         System.out.println("Bye. Hope to see you again soon!");
     }
@@ -35,4 +46,5 @@ public class UI {
         }
         return content;
     }
+
 }

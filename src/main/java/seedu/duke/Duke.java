@@ -127,30 +127,63 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(logo);
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        ArrayList<Task> inputArray = new ArrayList<Task>();
-        Storage dukeFile = new Storage("duke.txt");
+    private Storage storage;
+    private TaskList tasks;
+    private UI ui;
+
+    public Duke(String filePath) {
+        ui = new UI();
+        tasks = new TaskList();
         try {
-            dukeFile.readFile(inputArray);
-            dukeFile.displayFile();
+            storage = new Storage(filePath);
+            tasks = storage.readFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+//have the file, have loaded the tasks, can call method to parse
+    public void run() {
+        try {
+            Scanner input = new Scanner(System.in);
+            String userInput = input.nextLine();
+
+            ui.start();
+
+            while(true) {
+                userInput = input.nextLine();
+
+                if (userInput.equals("bye")) {
+                    break;
+                }
+
+                Parser parse = new Parser(userInput);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+    }
+    public static void main(String[] args) throws IOException {
+       /* Storage dukeFile = new Storage("duke.txt");
+        try {
+            dukeFile.readFile(tasks);
+            dukeFile.displayFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
 
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
 
         while (!userInput.equals("bye")) {
             try {
-                inputValidation(userInput,inputArray);
+                inputValidation(userInput,tasks);
             } catch (Exception e) {
                 userInput = input.nextLine();
             }
@@ -158,25 +191,25 @@ public class Duke {
             String[] tokens = userInput.split(" ");
 
             if (userInput.equals("list")) {
-                System.out.println(dukeFile.taskArrayToString(inputArray));
+                System.out.println(dukeFile.taskArrayToString(tasks));
             } else if (tokens[0].equals("done")) {
                 int taskIndex = Integer.parseInt(tokens[1]) - 1;
-                inputArray.get(taskIndex).setDone();
-                dukeFile.writeFile(inputArray);
+                tasks.get(taskIndex).setDone();
+                dukeFile.writeFile(tasks);
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  " + inputArray.get(taskIndex).toString());
+                System.out.println("  " + tasks.get(taskIndex).toString());
             } else if (tokens[0].equals("delete")) {
                 if (tokens[1].equals("all")) {
-                    inputArray.clear();
+                    tasks.clear();
                 } else {
                     int taskIndex = Integer.parseInt(tokens[1]) - 1;
-                    inputArray.remove(taskIndex);
+                    tasks.remove(taskIndex);
                 }
             } else if (tokens[0].equals("find")) {
                 ArrayList<Task> relevantTaskList = new ArrayList<Task>();
                 String keyword = userInput.split(" ", 2)[1];
-                for(int i=0; i < inputArray.size(); i++) {
-                    Task currTask = inputArray.get(i);
+                for(int i=0; i < tasks.size(); i++) {
+                    Task currTask = tasks.get(i);
                     if (currTask.toString().contains(keyword)) {
                         relevantTaskList.add(currTask);
                     }
@@ -187,24 +220,24 @@ public class Duke {
                 try {
                     inputValidation(userInput);
                     System.out.println("Got it. I've added this task: ");
-                    storeInput(userInput, inputArray);
-                    dukeFile.writeFile(inputArray);
-                    Task currTask = inputArray.get(inputArray.size() - 1);
+                    storeInput(userInput, tasks);
+                    dukeFile.writeFile(tasks);
+                    Task currTask = tasks.get(tasks.size() - 1);
                     System.out.println(" " + currTask.toString());
-                    System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 } catch (Exception e) {
                     userInput = input.nextLine();
                 }
                 System.out.println("Nice! I've deleted the task");
-                System.out.println("Now you left " + inputArray.size() + " in the list");
-                dukeFile.writeFile(inputArray);
+                System.out.println("Now you left " + tasks.size() + " in the list");
+                dukeFile.writeFile(tasks);
             } else {
                 System.out.println("Got it. I've added this task: ");
-                storeInput(userInput, inputArray);
-                dukeFile.writeFile(inputArray);
-                Task currTask = inputArray.get(inputArray.size() - 1);
+                storeInput(userInput, tasks);
+                dukeFile.writeFile(tasks);
+                Task currTask = tasks.get(tasks.size() - 1);
                 System.out.println(" " + currTask.toString());
-                System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
             }
             userInput = input.nextLine();
         }

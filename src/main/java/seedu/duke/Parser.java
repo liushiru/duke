@@ -18,6 +18,24 @@ enum Command {
 public class Parser {
     protected String input;
 
+//    public Parser(String userInput) {
+//        this.input = userInput;
+//    }
+
+    //validate and create Parser object
+  /*  public Parser(String input, ArrayList<Task> ... inputArray) throws Exception {
+        if(isValidInput(input, inputArray[0])) {
+            this.input = input;
+        };
+    }*/
+
+
+    public Parser(String input, ArrayList<Task> ... inputArray) throws Exception {
+        if(isValidInput(input, inputArray[0])) {
+            this.input = input;
+        };
+    }
+
     //make sure starting words is inside command enums
     public boolean validCommand(String userCmd) {
         for (Command c : Command.values()) {
@@ -69,12 +87,7 @@ public class Parser {
         return true;
     };
 
-    //validate and create Parser object
-    public Parser(String input, ArrayList<Task> ... inputArray) throws Exception {
-        if(isValidInput(input, inputArray[0])) {
-            this.input = input;
-        };
-    }
+
 
     //Decide which command
     public Command getCommand() {
