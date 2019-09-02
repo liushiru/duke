@@ -2,6 +2,7 @@ package seedu.duke;
 
 import seedu.duke.command.AddCommand;
 import seedu.duke.command.Command;
+import seedu.duke.command.ListCommand;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,8 +42,27 @@ public class Parser {
                     if (getTimeDate(input) != null) {
                         deadline.setTime(getTimeDate(input));
                     }
-                    //System.out.println(deadline.toString());
                     return new AddCommand(deadline);
+                }
+
+                case event: {
+                    String description = getDescriptionOfEventAndDeadline(input);
+                    String time = getTimeString(input);
+                    Event event = new Event(description, time);
+                    if (getTimeDate(input) != null) {
+                        event.setTime(getTimeDate(input));
+                    }
+                    return new AddCommand(event);
+                }
+
+                case todo: {
+                    String description = getDescriptionOfTodo(input);
+                    Todo todo = new Todo(description);
+                    return new AddCommand(todo);
+                }
+
+                case list: {
+                    return new ListCommand();
                 }
             }
         }
@@ -186,16 +206,4 @@ public class Parser {
             throw new DukeException.invalidCommandType();
         }
     }
-/*    public Task createTask() {
-        if (this.getCommand() == C.todo) {
-            Todo todo = new Todo(this.getDescriptionOfTodo());
-            return todo;
-        }
-
-        if (this.getCommand() == C.event) {
-            createTask()
-        }
-    }
-    */
-
 }

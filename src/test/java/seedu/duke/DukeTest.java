@@ -1,4 +1,4 @@
-package seedu.duke;z
+package seedu.duke;
 
 class DukeTest {
     public static void main(String args[]){

@@ -13,15 +13,16 @@ public class AddCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage)  {
-        EventType eventType = this.task.getType();
-
-        switch (eventType) {
-            case D: {
+//        EventType eventType = this.task.getType();
+//
+//        switch (eventType) {
+//            case D: {
                 tasks.add(this.task);
                 ui.addTaskUI(this.task);
+                ui.displayNumOfTasks(tasks);
                 storage.writeFile(tasks);
-            }
-        }
+         //   }
+      //  }
     }
 
 }

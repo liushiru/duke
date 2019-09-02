@@ -14,13 +14,13 @@ public class UI {
         return input.nextLine();
     }
 
-    public void displayTaskListSize(ArrayList<Task> inputArray){
-        System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
-    }
 
+    public void displayNumOfTasks(TaskList tasks) {
+        System.out.println("Now you have " + tasks.size() + " tasks in the list");
+    }
     public void addTaskUI(Task task) {
         System.out.println("Got it. I've added this task: ");
-        task.toString();
+        System.out.println("  " + task.toString());
     }
 
     public void doneTaskUI(Task task) {
@@ -44,18 +44,22 @@ public class UI {
     }
 
     public void showLine() {
-        System.out.println("    _____________________________________________________");
+        System.out.println("_____________________________________________________");
     }
+
     public void welfare() {
         System.out.println("Bye. Hope to see you again soon!");
     }
-    public String taskArrayToString (ArrayList<Task> inputArray) {
+
+
+ /*   public String taskArrayToString (TaskList tasks) {
         String content = "";
         int i = 1;
-        for(Task task : inputArray) {
+        for(Task task : tasks) {
             content += i++ + "." + task.toString() + "\n";
         }
         return content;
-    }
+    }*/
+
 
 }

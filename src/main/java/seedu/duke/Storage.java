@@ -70,10 +70,10 @@ public class Storage {
         }
     }
 
-    public void writeFile(ArrayList<Task> inputArray) {
+    public void writeFile(TaskList tasks) {
         //String content = taskArrayToString(inputArray);
-        UI ui = new UI();
-        String content = ui.taskArrayToString(inputArray);
+        //UI ui = new UI();
+        String content = tasks.toString();
         try {
             PrintWriter outputStream = new PrintWriter(new FileWriter(this.fileName));
             outputStream.print(content);
@@ -97,6 +97,7 @@ public class Storage {
                 tasks.add(task);
                 line = reader.readLine();
             }
+
             return tasks;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -1,1 +1,6 @@
 1.[T][✗] list
+2.[D][✗] todo (by: 98923)
+3.[D][✗] refactor (by: tonight)
+4.[D][✗] refactor (by: tonight)
+5.[T][✗] borrow book
+6.[E][✗] project meeting (at: Mon 2-4pm)
