@@ -1,19 +1,9 @@
 package seedu.duke;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-enum Type {
-    T,
-    D,
-    E
-}
-
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected Type type;
+    protected EventType type;
 
     public Task(String description) {
         this.description = description;
@@ -28,8 +18,12 @@ public class Task {
         return this.isDone;
     }
 
-    public void setType(Type type) {
+    public void setType(EventType type) {
         this.type = type;
+    }
+
+    public EventType getType() {
+        return this.type;
     }
 
     public String getStatusIcon() {

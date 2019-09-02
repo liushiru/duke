@@ -86,20 +86,24 @@ public class Storage {
     public TaskList readFile () {
         BufferedReader reader;
         try {
+            TaskList tasks = new TaskList();
             reader = new BufferedReader(new FileReader(this.fileName));
             String line = reader.readLine();
             if (line==null) {
-                return;
+                return new TaskList();
             }
             while (line != null) {
                 Task task = decodeLine(line);
+                tasks.add(task);
                 line = reader.readLine();
             }
+            return tasks;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return new TaskList();
     }
 
     public void displayFile() throws IOException {

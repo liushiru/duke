@@ -1,9 +1,18 @@
 package seedu.duke;
 
+import seedu.duke.CommandType;
+
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class UI {
 
+
+    public String readCommand() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
 
     public void displayTaskListSize(ArrayList<Task> inputArray){
         System.out.println("Now you have " + inputArray.size() + " tasks in the list.");
@@ -34,7 +43,9 @@ public class UI {
         System.out.println("What can I do for you?");
     }
 
-
+    public void showLine() {
+        System.out.println("    _____________________________________________________");
+    }
     public void welfare() {
         System.out.println("Bye. Hope to see you again soon!");
     }

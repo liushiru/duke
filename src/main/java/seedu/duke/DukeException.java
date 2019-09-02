@@ -35,12 +35,12 @@ public class DukeException extends Exception {
     }
     public static class invalidCommandType extends Exception {
         public invalidCommandType() {
-            System.out.println("☹ OOPS!!! the command type is invalid");
+            System.out.println("☹ OOPS!!! the C type is invalid");
         }
     }
     public static class emptyFileException extends Exception {
         public emptyFileException() {
-            System.out.println("☹ OOPS!!! the command type is invalid");
+            System.out.println("☹ OOPS!!! the C type is invalid");
         }
     }
 
