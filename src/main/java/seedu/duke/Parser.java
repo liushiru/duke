@@ -1,8 +1,6 @@
 package seedu.duke;
 
-import seedu.duke.command.AddCommand;
-import seedu.duke.command.Command;
-import seedu.duke.command.ListCommand;
+import seedu.duke.command.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +28,25 @@ public class Parser {
 //        };
 //    }
 
-    public static Command parse (String input) throws DukeException.invalidCommandType {
+    public static int getTaskNum (String input) throws DukeException.invalidTaskNumException {
+         if (input.contains(" ")) {
+            String[] arr;
+            arr = input.split(" ", 2);
+             try {
+             //   if (!arr[1].equals("all")) {
+                    int x = Integer.parseInt(arr[1]);
+                    return x-1;
+             //   }
+            } catch (Exception e) {
+                throw new DukeException.invalidTaskNumException();
+            }
+        } else {
+            throw new DukeException.invalidTaskNumException();
+        }
+    }
+
+
+    public static Command parse(String input) throws DukeException.invalidCommandType, DukeException.invalidTaskNumException {
 
         if (validCommand(input)) {
             CommandType type = getCommandType(input);
@@ -64,6 +80,27 @@ public class Parser {
                 case list: {
                     return new ListCommand();
                 }
+
+                case done: {
+                    int taskNum = getTaskNum(input);
+                    return new DoneCommand(taskNum);
+                }
+
+                case delete: {
+                    int taskNum = getTaskNum(input);
+                    return new DeleteCommand(taskNum);
+                }
+
+                case find: {
+                    String keyword = input.split(" ", 2)[1];
+                    return new FindCommand(keyword);
+                }
+
+                case bye: {
+                    return new ExitCommand();
+                }
+
+
             }
         }
             System.out.println("invalid Input");
@@ -150,6 +187,9 @@ public class Parser {
         }
         if (input.startsWith("done")) {
             return CommandType.done;
+        }
+        if (input.startsWith("find")) {
+            return CommandType.find;
         }
         if (input.startsWith("bye")) {
             return CommandType.bye;

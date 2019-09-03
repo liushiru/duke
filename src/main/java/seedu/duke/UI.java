@@ -1,8 +1,5 @@
 package seedu.duke;
 
-import seedu.duke.CommandType;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -14,6 +11,9 @@ public class UI {
         return input.nextLine();
     }
 
+    public void displayTasks(TaskList tasks) {
+        System.out.println(tasks.toString());
+    }
 
     public void displayNumOfTasks(TaskList tasks) {
         System.out.println("Now you have " + tasks.size() + " tasks in the list");
@@ -25,13 +25,17 @@ public class UI {
 
     public void doneTaskUI(Task task) {
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(task.toString());
+        System.out.println("  " + task.toString());
     }
 
     public void deleteTaskUI(int taskNum) {
         System.out.println("I have deleted task No." + taskNum + " for you");
     }
 
+    public void findTaskUI(TaskList relevantTasks) {
+        System.out.println("Here are the relevant tasks");
+        System.out.println(relevantTasks.toString());
+    }
     public void start() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -47,7 +51,7 @@ public class UI {
         System.out.println("_____________________________________________________");
     }
 
-    public void welfare() {
+    public void exit() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 

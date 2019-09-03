@@ -4,19 +4,18 @@ import seedu.duke.Storage;
 import seedu.duke.TaskList;
 import seedu.duke.UI;
 
-public class DeleteCommand extends Command{
+public class DoneCommand extends Command{
 
     protected int taskNum;
 
-    public DeleteCommand(int taskNum) {
+    public DoneCommand(int taskNum) {
         this.taskNum = taskNum;
     }
 
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
-        tasks.remove(this.taskNum);
-        ui.deleteTaskUI(this.taskNum);
-        ui.displayNumOfTasks(tasks);
+        tasks.get(this.taskNum).setDone();
         storage.writeFile(tasks);
+        ui.doneTaskUI(tasks.get(this.taskNum));
     }
 }

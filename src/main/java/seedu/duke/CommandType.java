@@ -7,5 +7,6 @@ public enum CommandType {
     todo,
     deadline,
     event,
-    bye
+    bye,
+    find
 }

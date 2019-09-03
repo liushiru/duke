@@ -10,15 +10,15 @@ public class DukeException extends Exception {
         this.input = input;
     }
 
-    public static class inputInvalidException extends Exception {
+    public static class inputInvalidException extends DukeException {
         public inputInvalidException() {
-            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            super("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
 
-    public static class emptyDescriptionException extends Exception {
+    public static class emptyDescriptionException extends DukeException {
         public emptyDescriptionException(String type) {
-            System.out.println("☹ OOPS!!! The description of a " + type + " cannot be empty.");
+            super("☹ OOPS!!! The description of a " + type + " cannot be empty.");
         }
     }
 
