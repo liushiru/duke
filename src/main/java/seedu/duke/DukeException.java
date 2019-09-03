@@ -4,10 +4,10 @@ public class DukeException extends Exception {
    // public static Object inputInvalidException;
     //public static Object inputInvalidException;
    // public static Object emptyDescriptionException;
-    protected String input;
+    protected String message;
 
     public DukeException(String input) {
-        this.input = input;
+        this.message = input;
     }
 
     public static class inputInvalidException extends DukeException {

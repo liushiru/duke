@@ -5,10 +5,25 @@ import java.util.Scanner;
 
 public class UI {
 
+    private Scanner scanner;
 
+    public UI() {
+        scanner = new Scanner(System.in);
+    }
     public String readCommand() {
-        Scanner input = new Scanner(System.in);
-        return input.nextLine();
+        if (scanner.hasNextLine()) {
+            return scanner.nextLine();
+        }
+
+        try {
+            throw new DukeException("No Line Found");
+        } catch (DukeException e) {
+            System.out.println(e.message);
+        }
+
+        return "bye";
+
+
     }
 
     public void displayTasks(TaskList tasks) {

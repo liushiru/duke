@@ -35,12 +35,13 @@ public class Duke {
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = fullCommand.equals("bye");
+              //  isExit = c.isExit();
             } catch (DukeException.invalidCommandType invalidCommandType) {
                 invalidCommandType.printStackTrace();
             } catch (DukeException.invalidTaskNumException e) {
                 e.printStackTrace();
             } finally {
-                //ui.showLine();
+                ui.showLine();
             }
         }
     }

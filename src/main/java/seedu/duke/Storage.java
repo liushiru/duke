@@ -11,10 +11,19 @@ import java.util.Date;
 public class Storage {
 
     protected String fileName;
-    protected Path path;
-    protected FileReader fileReader;
+
     public Storage(String fileName) throws FileNotFoundException {
-        this.fileName = fileName;
+        this.fileName = getFilePath(fileName);
+    }
+
+
+    public String getFilePath(String fileName) {
+        String UiTestFilePath = "..\\" + fileName;
+        String accessFrom = System.getProperty("user.dir");
+        if (accessFrom.contains("text-ui-test")) {
+            return UiTestFilePath;
+        }
+        return fileName;
     }
 /*
     public String taskArrayToString (ArrayList<Task> inputArray) {
