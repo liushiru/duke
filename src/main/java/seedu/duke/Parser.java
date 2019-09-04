@@ -4,29 +4,11 @@ import seedu.duke.command.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Parser {
     protected String input;
 
-//    public Parser(String userInput) {
-//        this.input = userInput;
-//    }
-
-    //validate and create Parser object
-  /*  public Parser(String input, ArrayList<Task> ... inputArray) throws Exception {
-        if(isValidInput(input, inputArray[0])) {
-            this.input = input;
-        };
-    }*/
-
-//
-//    public Parser(String input, ArrayList<Task> ... inputArray) throws Exception {
-//        if(isValidInput(input, inputArray[0])) {
-//            this.input = input;
-//        };
-//    }
 
     public static int getTaskNum (String input) throws DukeException.invalidTaskNumException {
          if (input.contains(" ")) {
@@ -46,130 +28,66 @@ public class Parser {
     }
 
 
-    public static Command parse(String input) throws DukeException.invalidCommandType, DukeException.invalidTaskNumException {
+    public static Command parse(String input) throws DukeException {
 
-        if (validCommand(input)) {
-            CommandType type = getCommandType(input);
-            switch (type) {
-                case deadline: {
-                    String description = getDescriptionOfEventAndDeadline(input);
-                    String time = getTimeString(input);
-                    Deadline deadline = new Deadline(description, time);
-                    if (getTimeDate(input) != null) {
-                        deadline.setTime(getTimeDate(input));
-                    }
-                    return new AddCommand(deadline);
+        CommandType type = getCommandType(input);
+        switch (type) {
+            case deadline: {
+                String description = getDescriptionOfEventAndDeadline(input);
+                String time = getTimeString(input);
+                Deadline deadline = new Deadline(description, time);
+                if (getTimeDate(input) != null) {
+                    deadline.setTime(getTimeDate(input));
                 }
+                return new AddCommand(deadline);
+            }
 
-                case event: {
-                    String description = getDescriptionOfEventAndDeadline(input);
-                    String time = getTimeString(input);
-                    Event event = new Event(description, time);
-                    if (getTimeDate(input) != null) {
-                        event.setTime(getTimeDate(input));
-                    }
-                    return new AddCommand(event);
+            case event: {
+                String description = getDescriptionOfEventAndDeadline(input);
+                String time = getTimeString(input);
+                Event event = new Event(description, time);
+                if (getTimeDate(input) != null) {
+                    event.setTime(getTimeDate(input));
                 }
+                return new AddCommand(event);
+            }
 
-                case todo: {
-                    String description = getDescriptionOfTodo(input);
-                    Todo todo = new Todo(description);
-                    return new AddCommand(todo);
-                }
+            case todo: {
+                String description = getDescriptionOfTodo(input);
+                Todo todo = new Todo(description);
+                return new AddCommand(todo);
+            }
 
-                case list: {
-                    return new ListCommand();
-                }
+            case list: {
+                return new ListCommand();
+            }
 
-                case done: {
-                    int taskNum = getTaskNum(input);
-                    return new DoneCommand(taskNum);
-                }
+            case done: {
+                int taskNum = getTaskNum(input);
+                return new DoneCommand(taskNum);
+            }
 
-                case delete: {
-                    int taskNum = getTaskNum(input);
-                    return new DeleteCommand(taskNum);
-                }
+            case delete: {
+                int taskNum = getTaskNum(input);
+                return new DeleteCommand(taskNum);
+            }
 
-                case find: {
-                    String keyword = input.split(" ", 2)[1];
-                    return new FindCommand(keyword);
-                }
+            case find: {
+                String keyword = input.split(" ", 2)[1];
+                return new FindCommand(keyword);
+            }
 
-                case bye: {
-                    return new ExitCommand();
-                }
-
-
+            case bye: {
+                return new ExitCommand();
             }
         }
             System.out.println("invalid Input");
             return null;
-
     }
-
-
-    //make sure starting words is inside C enums
-    public static boolean validCommand(String userCmd) {
-        for (CommandType c : CommandType.values()) {
-            if (c.name().equals(userCmd.split(" ")[0])) {
-                return true;
-            }
-        }
-
-        try {
-            throw new DukeException.inputInvalidException();
-        } catch (DukeException.inputInvalidException e) {
-            new UI().readCommand();
-        }
-        return false;
-    }
-
-    //test if input is valid
-    public boolean isValidInput(String input, ArrayList<Task>... inputArray) throws Exception {
-
-        if (input.startsWith("event") && input.equals("event")) {
-            throw new DukeException.emptyDescriptionException("event");
-        }
-
-        if (input.startsWith("todo") && input.equals("todo")) {
-            throw new DukeException.emptyDescriptionException("todo");
-        }
-
-        if (input.startsWith("deadline") && input.equals("deadline")) {
-            throw new DukeException.emptyDescriptionException("deadline");
-        }
-
-        if (input.startsWith("delete") || input.startsWith("done")) {
-            if (input.contains(" ")) {
-                String[] arr;
-                arr = input.split(" ", 2);
-                try {
-
-                    if (!arr[1].equals("all")) {
-                        int x = Integer.parseInt(arr[1]);
-                        if (x > inputArray[0].size() || x <= 0) {
-                            throw new DukeException.taskOutOfRangeException();
-                        }
-                    }
-                } catch (Exception e) {
-                    throw new DukeException.invalidTaskNumException();
-                }
-            } else {
-                throw new DukeException.invalidTaskNumException();
-            }
-        }
-
-        if (!validCommand(input.split(" ")[0])) {
-            throw new DukeException.inputInvalidException();
-        }
-        return true;
-    };
-
 
 
     //Decide which C
-    public static CommandType getCommandType(String input) {
+    public static CommandType getCommandType(String input) throws DukeException.inputInvalidException {
         if (input.startsWith("list")) {
             return CommandType.list;
         }
@@ -194,42 +112,67 @@ public class Parser {
         if (input.startsWith("bye")) {
             return CommandType.bye;
         }
-        return null;
+        throw new DukeException.inputInvalidException();
     }
 
+
     // return arr[description][time] for ddl and event
-    private static String[] getInfo(String input) {
+    private static String[] getInfo(String input) throws DukeException {
         CommandType type = getCommandType(input);
-//        if (!(type == CommandType.event || type == CommandType.deadline)) {
-//            throw new DukeException.invalidCommandType();
-//        }
         String descriptionWithTime = input.split(" ", 2)[1];
         String[] arr = new String[2];
         switch (type) {
             case deadline:
-                arr = descriptionWithTime.split(" /by ");
+                if(!input.contains(" /by ")) {
+                    throw new DukeException.invalidFormatException();
+                } else {
+                    arr = descriptionWithTime.split(" /by ");
+                }
                 break;
             case event:
+                if(!input.contains(" /at ")) {
+                    throw new DukeException.invalidFormatException();
+                }
                 arr = descriptionWithTime.split(" /at ");
                 break;
+        }
+        if (arr.length == 1 || arr.length == 0) {
+            throw new DukeException.inputInvalidException();
         }
         return arr;
     }
 
-    public static String getDescriptionOfTodo(String input) {
-        return input.split(" ", 2)[1];
+    private static boolean isEmptyDescription(String input) {
+        if ((input.split(" ", 2).length == 1)
+                || input.split(" ", 2)[1].trim().equals("")) {
+            return true;
+        }
+        return false;
     }
-    public static String getDescriptionOfEventAndDeadline(String input) {
+
+    public static String getDescriptionOfTodo(String input) throws DukeException {
+
+        if (!isEmptyDescription(input)) {
+            return input.split(" ", 2)[1];
+        }
+        throw new DukeException.emptyDescriptionException();
+    }
+    public static String getDescriptionOfEventAndDeadline(String input) throws DukeException {
+        if (getInfo(input)[0].trim().equals("")) {
+            throw new DukeException.emptyDescriptionException();
+        }
         return getInfo(input)[0];
     }
 
-    public static String getTimeString(String input) {
+    public static String getTimeString(String input) throws DukeException {
+        if (getInfo(input)[1].trim().equals("")) {
+            throw new DukeException.missingTimeException();
+        }
         return getInfo(input)[1];
     }
 
     //previously get date, get the date from string
-    public static Date getTimeDate (String input) throws DukeException.invalidCommandType {
-        if (getCommandType(input) == CommandType.deadline || getCommandType(input) == CommandType.event) {
+    public static Date getTimeDate (String input) throws DukeException{
             try {
                 String time = getTimeString(input);
                 Date date;
@@ -242,8 +185,5 @@ public class Parser {
             } catch (ParseException e) {
                 return null;
             }
-        } else {
-            throw new DukeException.invalidCommandType();
-        }
     }
 }

@@ -68,6 +68,7 @@ public class UI {
 
     public void exit() {
         System.out.println("Bye. Hope to see you again soon!");
+        scanner.close();
     }
 
 

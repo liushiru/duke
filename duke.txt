@@ -1,4 +1,5 @@
 1.[T][✗] list
 2.[T][✗] borrow book
-3.[D][✓] return book (by: Sunday)
+3.[D][✗] return book (by: Sunday)
 4.[E][✗] project meeting (at: Mon 2-4pm)
+5.[T][✗] \n

@@ -22,11 +22,6 @@ public class Duke {
 
     public void run() {
         ui.start();
-        try {
-            storage.displayFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         boolean isExit = false;
         while (!isExit) {
             try {
@@ -36,10 +31,8 @@ public class Duke {
                 c.execute(tasks, ui, storage);
                 isExit = fullCommand.equals("bye");
               //  isExit = c.isExit();
-            } catch (DukeException.invalidCommandType invalidCommandType) {
-                invalidCommandType.printStackTrace();
-            } catch (DukeException.invalidTaskNumException e) {
-                e.printStackTrace();
+            } catch (DukeException e) {
+                e.printMessage();
             } finally {
                 ui.showLine();
             }
