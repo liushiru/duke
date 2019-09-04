@@ -34,8 +34,8 @@ public class Parser {
         CommandType type = getCommandType(input);
         switch (type) {
             case deadline: {
-                String description = getDescriptionOfEventAndDeadline(input);
-                String time = getTimeString(input);
+                String description = getDescriptionOfEventAndDeadline(input).trim();
+                String time = getTimeString(input).trim();
                 Deadline deadline = new Deadline(description, time);
                 if (getTimeDate(input) != null) {
                     deadline.setTime(getTimeDate(input));
@@ -44,8 +44,8 @@ public class Parser {
             }
 
             case event: {
-                String description = getDescriptionOfEventAndDeadline(input);
-                String time = getTimeString(input);
+                String description = getDescriptionOfEventAndDeadline(input).trim();
+                String time = getTimeString(input).trim();
                 Event event = new Event(description, time);
                 if (getTimeDate(input) != null) {
                     event.setTime(getTimeDate(input));
@@ -54,7 +54,7 @@ public class Parser {
             }
 
             case todo: {
-                String description = getDescriptionOfTodo(input);
+                String description = getDescriptionOfTodo(input).trim();
                 Todo todo = new Todo(description);
                 return new AddCommand(todo);
             }
@@ -79,7 +79,11 @@ public class Parser {
             }
 
             case bye: {
-                return new ExitCommand();
+
+                if (input.equals("bye")) {
+                    return new ExitCommand();
+                }
+                throw new DukeException.inputInvalidException();
             }
         }
             System.out.println("invalid Input");

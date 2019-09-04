@@ -44,7 +44,7 @@ public class UI {
     }
 
     public void deleteTaskUI(int taskNum) {
-        System.out.println("I have deleted task No." + taskNum + " for you");
+        System.out.println("I have deleted task No." + (taskNum + 1) + " for you");
     }
 
     public void findTaskUI(TaskList relevantTasks) {
@@ -68,7 +68,7 @@ public class UI {
 
     public void exit() {
         System.out.println("Bye. Hope to see you again soon!");
-        scanner.close();
+       // scanner.close();
     }
 
 
