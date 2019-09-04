@@ -10,6 +10,7 @@ public class Parser {
     protected String input;
 
 
+
     public static int getTaskNum (String input) throws DukeException.invalidTaskNumException {
          if (input.contains(" ")) {
             String[] arr;
@@ -86,40 +87,23 @@ public class Parser {
     }
 
 
-    //Decide which C
-    public static CommandType getCommandType(String input) throws DukeException.inputInvalidException {
-        if (input.startsWith("list")) {
-            return CommandType.list;
-        }
-        if (input.startsWith("delete")) {
-            return CommandType.delete;
-        }
-        if (input.startsWith("deadline")) {
-            return CommandType.deadline;
-        }
-        if (input.startsWith("event")) {
-            return CommandType.event;
-        }
-        if (input.startsWith("todo")) {
-            return CommandType.todo;
-        }
-        if (input.startsWith("done")) {
-            return CommandType.done;
-        }
-        if (input.startsWith("find")) {
-            return CommandType.find;
-        }
-        if (input.startsWith("bye")) {
-            return CommandType.bye;
+    //make sure starting words is inside C enums
+    public static CommandType getCommandType(String userCmd) throws DukeException.inputInvalidException {
+        for (CommandType c : CommandType.values()) {
+            if (c.name().equals(userCmd.split(" ")[0])) {
+                return c;
+            }
         }
         throw new DukeException.inputInvalidException();
     }
 
-
     // return arr[description][time] for ddl and event
     private static String[] getInfo(String input) throws DukeException {
         CommandType type = getCommandType(input);
-        String descriptionWithTime = input.split(" ", 2)[1];
+        if (input.split(" ", 2).length == 1) {
+            throw new DukeException.emptyDescriptionException();
+        }
+        String descriptionWithTime= input.split(" ", 2)[1];
         String[] arr = new String[2];
         switch (type) {
             case deadline:

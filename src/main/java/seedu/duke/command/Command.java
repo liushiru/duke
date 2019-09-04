@@ -1,13 +1,10 @@
 package seedu.duke.command;
 
 
-import seedu.duke.CommandType;
-import seedu.duke.Storage;
-import seedu.duke.TaskList;
-import seedu.duke.UI;
+import seedu.duke.*;
 
 public abstract class Command {
 
-    public abstract void execute(TaskList tasks, UI ui, Storage storage);
+    public abstract void execute(TaskList tasks, UI ui, Storage storage) throws DukeException.taskOutOfRangeException;
 
 }
