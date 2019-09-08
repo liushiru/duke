@@ -10,7 +10,7 @@ public class Deadline extends Task {
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
-        this.setType(EventType.D);
+        this.setType(TaskType.D);
     }
 
     public Date getTime() {

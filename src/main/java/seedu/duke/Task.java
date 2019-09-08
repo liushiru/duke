@@ -3,7 +3,7 @@ package seedu.duke;
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected EventType type;
+    protected TaskType type;
 
     public Task(String description) {
         this.description = description;
@@ -18,11 +18,11 @@ public class Task {
         return this.isDone;
     }
 
-    public void setType(EventType type) {
+    public void setType(TaskType type) {
         this.type = type;
     }
 
-    public EventType getType() {
+    public TaskType getType() {
         return this.type;
     }
 

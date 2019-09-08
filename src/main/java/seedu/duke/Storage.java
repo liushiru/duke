@@ -1,11 +1,6 @@
 package seedu.duke;
 
-
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
 
 //to read and write from the file
 public class Storage {
@@ -25,17 +20,8 @@ public class Storage {
         }
         return fileName;
     }
-/*
-    public String taskArrayToString (ArrayList<Task> inputArray) {
-        String content = "";
-        int i = 1;
-        for(Task task : inputArray) {
-            content += i++ + "." + task.toString() + "\n";
-        }
-        return content;
-    }
-*/
-    public static Task decodeLine (String line) {
+
+    public static Task decodeLine(String line) {
         int typeIndex = line.indexOf("[") + 1;
         char type = line.charAt(typeIndex);
         int doneIndex = line.indexOf("][") + 1;
@@ -92,13 +78,13 @@ public class Storage {
         }
     }
 
-    public TaskList readFile () {
+    public TaskList readFile() {
         BufferedReader reader;
         try {
             TaskList tasks = new TaskList();
             reader = new BufferedReader(new FileReader(this.fileName));
             String line = reader.readLine();
-            if (line==null) {
+            if (line == null) {
                 return new TaskList();
             }
             while (line != null) {
@@ -114,13 +100,5 @@ public class Storage {
             e.printStackTrace();
         }
         return new TaskList();
-    }
-
-    public void displayFile() throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader(this.fileName));
-        String line;
-        while((line = in.readLine()) != null) {
-            System.out.println(line);
-        }
     }
 }

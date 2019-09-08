@@ -1,6 +1,8 @@
 package seedu.duke;
 
 import seedu.duke.command.Command;
+import seedu.duke.command.ExitCommand;
+
 import java.io.*;
 
 
@@ -29,8 +31,10 @@ public class Duke {
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
-                isExit = fullCommand.equals("bye");
-              //  isExit = c.isExit();
+                if (c instanceof ExitCommand) {
+                    isExit = true;
+                }
+               // isExit = fullCommand.equals("bye");
             } catch (DukeException e) {
                 e.printMessage();
             } finally {

@@ -7,9 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Parser {
-    protected String input;
-
-
 
     public static int getTaskNum (String input) throws DukeException.invalidTaskNumException {
          if (input.contains(" ")) {

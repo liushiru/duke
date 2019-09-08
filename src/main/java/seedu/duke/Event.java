@@ -8,7 +8,7 @@ public class Event extends Task {
     public Event(String description, String at) {
         super(description);
         this.at = at;
-        this.setType(EventType.E);
+        this.setType(TaskType.E);
     }
 
     public Date getTime() {

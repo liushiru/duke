@@ -1,7 +1,12 @@
 package seedu.duke;
 
+import org.junit.jupiter.api.Test;
+
 class DukeTest {
-    public static void main(String args[]){
-        System.out.println("Hello Java");
+
+    @Test
+    void justAnExample() {
+        System.out.println("This test method should be run");
+//        assertEquals(1, 2);
     }
 }

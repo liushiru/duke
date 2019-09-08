@@ -68,18 +68,5 @@ public class UI {
 
     public void exit() {
         System.out.println("Bye. Hope to see you again soon!");
-       // scanner.close();
     }
-
-
- /*   public String taskArrayToString (TaskList tasks) {
-        String content = "";
-        int i = 1;
-        for(Task task : tasks) {
-            content += i++ + "." + task.toString() + "\n";
-        }
-        return content;
-    }*/
-
-
 }

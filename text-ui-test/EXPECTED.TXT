@@ -6,10 +6,39 @@
 
 Hello! I'm Duke
 What can I do for you?
-1.[T][✗] list
-2.[T][✗] borrow book
-3.[D][✓] return book (by: Sunday)
-4.[E][✗] project meeting (at: Mon 2-4pm)
+_____________________________________________________
+Got it. I've added this task:
+  [T][✗] borrow book
+Now you have 8 tasks in the list
+_____________________________________________________
+_____________________________________________________
+Got it. I've added this task:
+  [D][✗] return book (by: Sunday)
+Now you have 9 tasks in the list
+_____________________________________________________
+_____________________________________________________
+Got it. I've added this task:
+  [E][✗] project meeting (at: Mon 2-4pm)
+Now you have 10 tasks in the list
+_____________________________________________________
+_____________________________________________________
+1.[T][✗] 12345
+2.[T][✗] 123
+3.[T][✗] 123 123
+4.[T][✗] __
+5.[D][✗] 123 (by: 1)
+6.[D][✗] 1234 (by: 22/11/2019 1100)
+7.[E][✗] 12938 (at: sidindb)
+8.[T][✗] borrow book
+9.[D][✗] return book (by: Sunday)
+10.[E][✗] project meeting (at: Mon 2-4pm)
+
+_____________________________________________________
+_____________________________________________________
+☹ OOPS!!! I'm sorry, but I don't know what that means :-(
+_____________________________________________________
+No Line Found
 _____________________________________________________
 Bye. Hope to see you again soon!
+_____________________________________________________
 _____________________________________________________
