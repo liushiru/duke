@@ -5,12 +5,22 @@ import seedu.duke.command.ExitCommand;
 
 import java.io.*;
 
-
+/**
+ * Duke is a personal assistance that helps to keep track of the tasks you have
+ * There are three types of task: Todo, Deadline, Event
+ *
+ * @author liushiru
+ */
 public class Duke {
     private Storage storage;
     private TaskList tasks;
     private UI ui;
 
+    /**
+     * Creates a duke class
+     *
+     * @param filePath The file path that all tasks are stored
+     */
     public Duke(String filePath) {
         ui = new UI();
         try {
@@ -22,6 +32,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Run the programme
+     */
     public void run() {
         ui.start();
         boolean isExit = false;

@@ -2,17 +2,29 @@ package seedu.duke;
 
 import java.io.*;
 
-//to read and write from the file
+/**
+ * Represent a class to read and write from a file
+ */
 public class Storage {
 
     protected String fileName;
 
+    /**
+     * Creates a Storage object with the given file
+     * @param fileName path of the file that needs to be read from and write to
+     * @throws FileNotFoundException throw exception when file is not found
+     */
     public Storage(String fileName) throws FileNotFoundException {
         this.fileName = getFilePath(fileName);
     }
 
 
-    public String getFilePath(String fileName) {
+    /**
+     * Gets file path
+     * @param fileName name of the file
+     * @return Relative path of the file from the accessing place
+     */
+    private String getFilePath(String fileName) {
         String UiTestFilePath = "..\\" + fileName;
         String accessFrom = System.getProperty("user.dir");
         if (accessFrom.contains("text-ui-test")) {
@@ -21,7 +33,12 @@ public class Storage {
         return fileName;
     }
 
-    public static Task decodeLine(String line) {
+    /**
+     * Decode the string to a task
+     * @param line The string to decode
+     * @return Task in that string
+     */
+    private static Task decodeLine(String line) {
         int typeIndex = line.indexOf("[") + 1;
         char type = line.charAt(typeIndex);
         int doneIndex = line.indexOf("][") + 1;
@@ -65,9 +82,13 @@ public class Storage {
         }
     }
 
+
+    /**
+     * Overwrite the file with the updated task list
+     *
+     * @param tasks Updated tasks lists
+     */
     public void writeFile(TaskList tasks) {
-        //String content = taskArrayToString(inputArray);
-        //UI ui = new UI();
         String content = tasks.toString();
         try {
             PrintWriter outputStream = new PrintWriter(new FileWriter(this.fileName));
@@ -78,6 +99,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Read all tasks to task list
+     * @return Task list that contains all tasks stored in the file
+     */
     public TaskList readFile() {
         BufferedReader reader;
         try {
@@ -92,7 +117,6 @@ public class Storage {
                 tasks.add(task);
                 line = reader.readLine();
             }
-
             return tasks;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
