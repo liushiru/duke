@@ -5,10 +5,14 @@ package seedu.duke;
  */
 public class DukeException extends Exception {
 
+    /**
+     * Represents the massage to be contained in the exception.
+     */
     protected String message;
 
     /**
      * Creates a DukeException with the given message
+     *
      * @param input Message the exception wants to deliver
      */
     public DukeException(String input) {

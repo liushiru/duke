@@ -4,7 +4,15 @@ package seedu.duke;
  * Represents a generic task
  */
 public class Task {
+
+    /**
+     * Represents the description component of the task.
+     */
     protected String description;
+
+    /**
+     * Represents the whether the tasks is marked as done
+     */
     protected boolean isDone;
 
     /**

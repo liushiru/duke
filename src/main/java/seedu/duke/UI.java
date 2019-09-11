@@ -7,17 +7,19 @@ import java.util.Scanner;
  */
 public class UI {
 
+
     private Scanner scanner;
 
     /**
-     * Creates a UI object
+     * Creates a UI object.
      */
     public UI() {
         scanner = new Scanner(System.in);
     }
 
     /**
-     * Read user input
+     * Read user input.
+     *
      * @return Input string from user
      */
     public String readCommand() {
@@ -36,6 +38,7 @@ public class UI {
 
     /**
      * Display all tasks in the tasks list
+     *
      * @param tasks Task list containing all tasks
      */
     public void displayTasks(TaskList tasks) {
@@ -44,6 +47,7 @@ public class UI {
 
     /**
      * Displays total number of tasks in the list
+     *
      * @param tasks Task list
      */
     public void displayNumOfTasks(TaskList tasks) {
@@ -52,6 +56,7 @@ public class UI {
 
     /**
      * Displays message after adding a task
+     *
      * @param task The task that is added
      */
     public void addTaskUI(Task task) {
@@ -61,6 +66,7 @@ public class UI {
 
     /**
      * Displays message after a task is marked as done
+     *
      * @param task The task that is marked as done
      */
     public void doneTaskUI(Task task) {
@@ -70,6 +76,7 @@ public class UI {
 
     /**
      * Displays message after a task is deleted
+     *
      * @param taskNum The task number of the task that needs to be deleted
      */
     public void deleteTaskUI(int taskNum) {
@@ -78,6 +85,7 @@ public class UI {
 
     /**
      * Displays all tasks found
+     *
      * @param relevantTasks Task list containing all tasks found
      */
     public void findTaskUI(TaskList relevantTasks) {

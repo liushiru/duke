@@ -7,13 +7,21 @@ import java.util.Date;
  */
 public class Deadline extends Task {
 
+    /**
+     * Represents the deadline time in String type.
+     */
     protected String by;
+
+    /**
+     * Represents the deadline time in Date type.
+     */
     protected Date time;
 
     /**
      * Creates a deadline
+     *
      * @param description Description of the deadline
-     * @param by Time of the deadline as a string
+     * @param by          Time of the deadline as a string
      */
     public Deadline(String description, String by) {
         super(description);
@@ -40,10 +48,11 @@ public class Deadline extends Task {
 
     /**
      * Returns a string representing this deadline
+     *
      * @return
      */
     @Override
     public String toString() {
-        return "[D]"+"[" + super.getStatusIcon()+"] " + super.getDescription() + " (by: " + by + ")";
+        return "[D]" + "[" + super.getStatusIcon() + "] " + super.getDescription() + " (by: " + by + ")";
     }
 }

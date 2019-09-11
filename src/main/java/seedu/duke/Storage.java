@@ -7,10 +7,14 @@ import java.io.*;
  */
 public class Storage {
 
+    /**
+     * Represents the name of the text file to be stored to.
+     */
     protected String fileName;
 
     /**
      * Creates a Storage object with the given file
+     *
      * @param fileName path of the file that needs to be read from and write to
      * @throws FileNotFoundException throw exception when file is not found
      */
@@ -21,6 +25,7 @@ public class Storage {
 
     /**
      * Gets file path
+     *
      * @param fileName name of the file
      * @return Relative path of the file from the accessing place
      */
@@ -35,6 +40,7 @@ public class Storage {
 
     /**
      * Decode the string to a task
+     *
      * @param line The string to decode
      * @return Task in that string
      */
@@ -101,6 +107,7 @@ public class Storage {
 
     /**
      * Read all tasks to task list
+     *
      * @return Task list that contains all tasks stored in the file
      */
     public TaskList readFile() {

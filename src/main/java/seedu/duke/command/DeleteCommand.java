@@ -8,8 +8,11 @@ import seedu.duke.UI;
 /**
  * Represents a command to delete a task
  */
-public class DeleteCommand extends Command{
+public class DeleteCommand extends Command {
 
+    /**
+     * Represent the task number of the task to be deleted.
+     */
     protected int taskNum;
 
     /**
@@ -24,8 +27,8 @@ public class DeleteCommand extends Command{
     /**
      * Deletes the task specified from the task list and the storage file
      *
-     * @param tasks The TaskList object that stores all tasks in the list
-     * @param ui The user interface object that displays text response to user's input
+     * @param tasks   The TaskList object that stores all tasks in the list
+     * @param ui      The user interface object that displays text response to user's input
      * @param storage The seedu.duke.Storage object that controls the text file that stores tasks
      * @throws DukeException.taskOutOfRangeException Throws exception when the task number is out of range
      */

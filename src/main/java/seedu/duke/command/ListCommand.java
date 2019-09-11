@@ -7,7 +7,7 @@ import seedu.duke.UI;
 /**
  * Represents a command to list all tasks in the task list
  */
-public class ListCommand extends Command{
+public class ListCommand extends Command {
 
     /**
      * Display all tasks in the task list

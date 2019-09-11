@@ -8,8 +8,11 @@ import seedu.duke.UI;
 /**
  * Represents the command to mark a task as done
  */
-public class DoneCommand extends Command{
+public class DoneCommand extends Command {
 
+    /**
+     * Represent the task number of the task to be marked as done.
+     */
     protected int taskNum;
 
     /**
@@ -24,8 +27,8 @@ public class DoneCommand extends Command{
     /**
      * Marks the task as done
      *
-     * @param tasks The TaskList object that stores all tasks in the list
-     * @param ui The user interface object that displays text response to user's input
+     * @param tasks   The TaskList object that stores all tasks in the list
+     * @param ui      The user interface object that displays text response to user's input
      * @param storage The seedu.duke.Storage object that controls the text file that stores tasks
      * @throws DukeException.taskOutOfRangeException
      */
