@@ -1,7 +1,7 @@
 package seedu.duke;
 
 /**
- * Represents a task of type Todo
+ * Represents a task of type Todo.
  */
 public class Todo extends Task {
 
@@ -14,9 +14,9 @@ public class Todo extends Task {
     }
 
     /**
-     * Returns a string describing the todo in desired format
+     * Returns a string describing the todo in desired format.
      *
-     * @return The string representation of the todo
+     * @return The string representation of the todo.
      */
     @Override
     public String toString() {

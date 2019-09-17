@@ -36,7 +36,7 @@ public class AddCommandTest {
 
 
     @Test
-    void executeTest() throws FileNotFoundException {
+    void executeTest_addSuccessful() throws FileNotFoundException {
         setUpStreams();
         TaskList tasks = new TaskList();
         UI ui = new UI();

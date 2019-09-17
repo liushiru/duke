@@ -3,7 +3,7 @@ package seedu.duke;
 import java.util.Date;
 
 /**
- * Represents a task of type deadline
+ * Represents a task of type deadline.
  */
 public class Deadline extends Task {
 
@@ -18,10 +18,10 @@ public class Deadline extends Task {
     protected Date time;
 
     /**
-     * Creates a deadline
+     * Creates a deadline.
      *
-     * @param description Description of the deadline
-     * @param by          Time of the deadline as a string
+     * @param description Description of the deadline.
+     * @param by          Time of the deadline as a string.
      */
     public Deadline(String description, String by) {
         super(description);
@@ -29,27 +29,27 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the time of the deadline as a Date
+     * Returns the time of the deadline as a Date.
      *
-     * @return the time of the deadline
+     * @return the time of the deadline.
      */
     public Date getTime() {
         return this.time;
     }
 
     /**
-     * Set the time of the deadline
+     * Set the time of the deadline.
      *
-     * @param time the time of the deadline
+     * @param time the time of the deadline.
      */
     public void setTime(Date time) {
         this.time = time;
     }
 
     /**
-     * Returns a string representing this deadline
+     * Returns a string representing this deadline.
      *
-     * @return
+     * @return A string representing this deadline.
      */
     @Override
     public String toString() {

@@ -3,7 +3,7 @@ package seedu.duke;
 import java.util.Scanner;
 
 /**
- * Represents a class that interact with the user
+ * Represents a class that interact with the user.
  */
 public class UI {
 
@@ -20,7 +20,7 @@ public class UI {
     /**
      * Read user input.
      *
-     * @return Input string from user
+     * @return Input string from user.
      */
     public String readCommand() {
         if (scanner.hasNextLine()) {
@@ -37,9 +37,9 @@ public class UI {
     }
 
     /**
-     * Display all tasks in the tasks list
+     * Display all tasks in the tasks list.
      *
-     * @param tasks Task list containing all tasks
+     * @param tasks Task list containing all tasks.
      */
     public void displayTasks(TaskList tasks) {
         System.out.println(tasks.toString());
@@ -55,9 +55,9 @@ public class UI {
     }
 
     /**
-     * Displays message after adding a task
+     * Displays message after adding a task.
      *
-     * @param task The task that is added
+     * @param task The task that is added.
      */
     public void addTaskUI(Task task) {
         System.out.println("Got it. I've added this task: ");
@@ -65,9 +65,9 @@ public class UI {
     }
 
     /**
-     * Displays message after a task is marked as done
+     * Displays message after a task is marked as done.
      *
-     * @param task The task that is marked as done
+     * @param task The task that is marked as done.
      */
     public void doneTaskUI(Task task) {
         System.out.println("Nice! I've marked this task as done:");
@@ -75,18 +75,18 @@ public class UI {
     }
 
     /**
-     * Displays message after a task is deleted
+     * Displays message after a task is deleted.
      *
-     * @param taskNum The task number of the task that needs to be deleted
+     * @param taskNum The task number of the task that needs to be deleted.
      */
     public void deleteTaskUI(int taskNum) {
         System.out.println("I have deleted task No." + (taskNum + 1) + " for you");
     }
 
     /**
-     * Displays all tasks found
+     * Displays all tasks found.
      *
-     * @param relevantTasks Task list containing all tasks found
+     * @param relevantTasks Task list containing all tasks found.
      */
     public void findTaskUI(TaskList relevantTasks) {
         System.out.println("Here are the relevant tasks");
@@ -94,7 +94,7 @@ public class UI {
     }
 
     /**
-     * Displays greeting message when program starts
+     * Displays greeting message when program starts.
      */
     public void start() {
         String logo = " ____        _        \n"
@@ -108,14 +108,14 @@ public class UI {
     }
 
     /**
-     * Displays separation line between each user input
+     * Displays separation line between each user input.
      */
     public void showLine() {
         System.out.println("_____________________________________________________");
     }
 
     /**
-     * Display goodbye message when user exits
+     * Display goodbye message when user exits.
      */
     public void exit() {
         System.out.println("Bye. Hope to see you again soon!");

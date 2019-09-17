@@ -1,0 +1,21 @@
+        Pattern recurPattern = Pattern.compile("(-\\w+ [^-]+|-\\w+)");
+        Matcher recurMatcher = paramsPattern.matcher(line);
+        while (paramsMatcher.find()) {
+            String s = recurMatcher.group().strip();
+            if (s.isEmpty() || s.isBlank()) continue;
+            Pattern periodPattern = Pattern.compile("-(\\w+) ([^-]+)|-(\\w+)");
+            Matcher periodMatcher = periodPattern.matcher(s);
+            if (!periodMatcher.find()) {
+                throw new DukeException("Please enter valid parameters");
+            }
+
+            if (periodMatcher.group(2) == null) {
+                params.put(periodMatcher.group(3), "");
+                System.out.println("line 104: " + periodMatcher.group(3));
+            } else {
+                params.put(periodMatcher.group(1), periodMatcher.group(2));
+                System.out.println("line 107: group 1" + periodMatcher.group(1));
+                System.out.println("line 107: group 2" + periodMatcher.group(2));
+            }
+        }
+

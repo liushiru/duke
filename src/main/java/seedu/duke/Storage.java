@@ -110,7 +110,7 @@ public class Storage {
      *
      * @return Task list that contains all tasks stored in the file
      */
-    public TaskList readFile() {
+    public TaskList readFile() throws IOException {
         BufferedReader reader;
         try {
             TaskList tasks = new TaskList();
@@ -126,7 +126,16 @@ public class Storage {
             }
             return tasks;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            String accessFrom = System.getProperty("user.dir");
+            System.out.println(accessFrom);
+            String absoluteFilePath = accessFrom + "\\" + this.fileName;
+            System.out.println(absoluteFilePath);
+            File file = new File(absoluteFilePath);
+            if (file.createNewFile()) {
+                System.out.println("file created: " + absoluteFilePath);
+            }
+            return new TaskList();
         } catch (IOException e) {
             e.printStackTrace();
         }
