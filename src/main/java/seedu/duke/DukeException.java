@@ -26,6 +26,10 @@ public class DukeException extends Exception {
         System.out.println(this.message);
     }
 
+    public String getMessage() {
+        return this.message;
+    }
+
     /**
      * Represents a invalid input exception
      */

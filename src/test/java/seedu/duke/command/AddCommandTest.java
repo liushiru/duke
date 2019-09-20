@@ -9,6 +9,7 @@ import seedu.duke.UI;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +37,7 @@ public class AddCommandTest {
 
 
     @Test
-    void executeTest_addSuccessful() throws FileNotFoundException {
+    void executeTest_addSuccessful() throws IOException {
         setUpStreams();
         TaskList tasks = new TaskList();
         UI ui = new UI();
